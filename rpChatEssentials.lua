@@ -304,34 +304,36 @@ Methods.SendLocalMessage = function(pid, message, useName)
 	-- Get top left cell from our cell
 	local myCellDescription = Players[pid].data.location.cell
 	
-	if tes3mp.IsInExterior(pid) == true then
-		local cellX = tonumber(string.sub(myCellDescription, 1, string.find(myCellDescription, ",") - 1))
-		local cellY = tonumber(string.sub(myCellDescription, string.find(myCellDescription, ",") + 2))
-		
-		local firstCellX = cellX - localChatCellRadius
-		local firstCellY = cellY + localChatCellRadius
-		
-		local length = localChatCellRadius * 2
-		
-		for x = 0, length, 1 do
-			for y = 0, length, 1 do
-				-- loop through all y inside of x
-				local tempCell = (x+firstCellX)..", "..(firstCellY-y)
-				-- send message to each player in cell
-				if LoadedCells[tempCell] ~= nil then
-					if useName == true then
-							SendMessageToAllInCell(tempCell, Methods.GetFullName(pid, false)..": "..message.."\n")
-					else
-						SendMessageToAllInCell(tempCell, message.."\n")
+	if myCellDescription ~= nil and myCellDescription ~= '' then
+		if tes3mp.IsInExterior(pid) == true then
+			local cellX = tonumber(string.sub(myCellDescription, 1, string.find(myCellDescription, ",") - 1))
+			local cellY = tonumber(string.sub(myCellDescription, string.find(myCellDescription, ",") + 2))
+
+			local firstCellX = cellX - localChatCellRadius
+			local firstCellY = cellY + localChatCellRadius
+
+			local length = localChatCellRadius * 2
+
+			for x = 0, length, 1 do
+				for y = 0, length, 1 do
+					-- loop through all y inside of x
+					local tempCell = (x+firstCellX)..", "..(firstCellY-y)
+					-- send message to each player in cell
+					if LoadedCells[tempCell] ~= nil then
+						if useName == true then
+								SendMessageToAllInCell(tempCell, Methods.GetFullName(pid, false)..": "..message.."\n")
+						else
+							SendMessageToAllInCell(tempCell, message.."\n")
+						end
 					end
 				end
 			end
-		end
-	else
-		if useName == true then
-			SendMessageToAllInCell(myCellDescription, Methods.GetFullName(pid, false)..": "..message.."\n")
 		else
-			SendMessageToAllInCell(myCellDescription, message.."\n")
+			if useName == true then
+				SendMessageToAllInCell(myCellDescription, Methods.GetFullName(pid, false)..": "..message.."\n")
+			else
+				SendMessageToAllInCell(myCellDescription, message.."\n")
+			end
 		end
 	end
 end
