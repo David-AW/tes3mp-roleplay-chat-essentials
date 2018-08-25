@@ -6,12 +6,12 @@
 **2.)** Go into **/mp-stuff/data/** and open **scripts.json**
 
 
-**3.)** Put ```"rpChatEssentials"``` as the *first* script at the top
+**3.)** Put ```"rpChat"``` as the *first* script at the top
 
 **Example:**
 ```
 {
-  "rpChatEssentials",
+  "rpChat",
   "DefaultCommands",
   "foo",
   "bar",
